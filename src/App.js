@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 
 function App() {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://swapi.dev/api/starships");
-        console.log(response.json());
+        const response = await fetch("https://swapi.dev/api/people");
+        const data = await response.json();
+        const results = data.results;
+        setData(results);
       } catch (error) {
         console.error(error);
       }
@@ -16,7 +18,13 @@ function App() {
   }, []);
   return (
     <div className="App">
-      <h1>Yo </h1>
+      <h1>Starwars time </h1>
+      <ul>
+        {" "}
+        {data.map((person) => (
+          <li>{person.name}</li>
+        ))}
+      </ul>
     </div>
   );
 }
